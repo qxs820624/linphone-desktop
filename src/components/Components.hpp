@@ -36,6 +36,7 @@
 #include "conference/ConferenceModel.hpp"
 #include "contacts/ContactsListProxyModel.hpp"
 #include "core/CoreManager.hpp"
+#include "network/FileDownloader.hpp"
 #include "presence/OwnPresenceModel.hpp"
 #include "settings/AccountSettingsModel.hpp"
 #include "sip-addresses/SipAddressesProxyModel.hpp"

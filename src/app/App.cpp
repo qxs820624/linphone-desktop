@@ -405,6 +405,7 @@ void App::registerTypes () {
   registerType<ConferenceHelperModel>("ConferenceHelperModel");
   registerType<ConferenceModel>("ConferenceModel");
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
+  registerType<FileDownloader>("FileDownloader");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");

@@ -142,6 +142,7 @@ set(SOURCES
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
   src/components/core/messages-count-notifier/AbstractMessagesCountNotifier.cpp
+  src/components/network/FileDownloader.cpp
   src/components/notifier/Notifier.cpp
   src/components/other/clipboard/Clipboard.cpp
   src/components/other/colors/Colors.cpp
@@ -198,6 +199,7 @@ set(HEADERS
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
   src/components/core/messages-count-notifier/AbstractMessagesCountNotifier.hpp
+  src/components/network/FileDownloader.hpp
   src/components/notifier/Notifier.hpp
   src/components/other/clipboard/Clipboard.hpp
   src/components/other/colors/Colors.hpp
