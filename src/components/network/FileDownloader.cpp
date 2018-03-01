@@ -28,51 +28,44 @@ namespace {
   constexpr qint64 cMaxBytes = 10000000;
 }
 
-FileDownloader::FileDownloader () {
-  connect(&manager, &QNetworkAccessManager::finished, this, &FileDownloader::handleDownloadFinished);
-}
-
 void FileDownloader::download () {
   QNetworkRequest request(mUrl);
-  QNetworkReply *reply = manager.get(request);
-
+  networkReply = manager.get(request);
+  if(mOutputPath != NULL)  destinationFile.setFileName(QFileInfo(mOutputPath).fileName());
+  else destinationFile.setFileName(saveFileName(mUrl));
+ 
+  if(!destinationFile.open(QIODevice::WriteOnly)) {
+    qWarning() << QStringLiteral("Could not open %1 for writing: %2").arg(qPrintable(destinationFile.fileName())).arg(qPrintable(destinationFile.errorString()));
+    emit downloadFailed();
+    return;
+  }
 #if QT_CONFIG(ssl)
-  connect(reply, &QNetworkReply::sslErrors, this, &FileDownloader::handleSslErrors);
+  connect(networkReply, &QNetworkReply::sslErrors, this, &FileDownloader::handleSslErrors);
 #endif
-  connect(reply, &QNetworkReply::downloadProgress, this, &FileDownloader::handleUpdateDownloadProgress);
+  connect(networkReply, &QNetworkReply::downloadProgress, this, &FileDownloader::handleUpdateDownloadProgress);
+  connect(networkReply, &QNetworkReply::readyRead, this, &FileDownloader::readData);
+  connect(networkReply, &QNetworkReply::finished, this, &FileDownloader::finishDownload);
   emit downloadingChanged(true);
-  currentDownloads.append(reply);
+  currentDownloads.append(networkReply);
 }
 
 QString FileDownloader::saveFileName (const QUrl &url) {
-	QString basename = QFileInfo(url.path()).fileName();
-	
-    if (basename.isEmpty())
-        basename = "download";
+  QString basename = QFileInfo(url.path()).fileName();
 
-    if (QFile::exists(basename)) {
-        // already exists, don't overwrite
-        int i = 0;
-		basename += '.';
-        while (QFile::exists(basename + QString::number(i)))
-            ++i;
+  if (basename.isEmpty())
+    basename = "download";
 
-        basename += QString::number(i);
-    }
+  if (QFile::exists(basename)) {
+    // already exists, don't overwrite
+    int i = 0;
+    basename += '.';
+    while (QFile::exists(basename + QString::number(i)))
+       ++i;
 
-    return basename;
-}
+    basename += QString::number(i);
+   }
 
-bool FileDownloader::saveToDisk (const QString &filename, QIODevice *data) {
-    QFile file(filename);
-    if (!file.open(QIODevice::WriteOnly)) {
-        qWarning() << QStringLiteral("Could not open %1 for writing: %2").arg(qPrintable(filename)).arg(qPrintable(file.errorString()));
-        return false;
-    }
-
-    file.write(data->readAll());
-
-    return true;
+   return basename;
 }
 
 bool FileDownloader::isHttpRedirect(QNetworkReply *reply) {
@@ -81,32 +74,31 @@ bool FileDownloader::isHttpRedirect(QNetworkReply *reply) {
            || statusCode == 305 || statusCode == 307 || statusCode == 308;
 }
 
-void FileDownloader::handleDownloadFinished (QNetworkReply *reply) {
-    QUrl url = reply->url();
-	bool failed = false;
-    if (reply->error()) {
-        qWarning() << QStringLiteral("Download of %1 failed: %2").arg(url.toEncoded().constData()).arg(qPrintable(reply->errorString()));
-		failed = true;
-    } else {
-		// TODO: Deal with redirection.
-        if (isHttpRedirect(reply)) {
-            qWarning() << QStringLiteral("Request was redirected.");
-			failed = true;
-        } else {
-            QString filename = saveFileName(url);
-            if (saveToDisk(filename, reply)) {
-                qInfo() << QStringLiteral("Download of %1 succeeded (saved to %2)").arg(url.toEncoded().constData()).arg(qPrintable(filename));
-            }
-        }
-    }
+void FileDownloader::readData(){
+  QByteArray data= networkReply->readAll();
+  destinationFile.write(data);
+}
 
-    currentDownloads.removeAll(reply);
-    reply->deleteLater();
-	
-	//download finished
-	emit downloadingChanged(false);
-	if(failed) emit downloadFailed();
-	else emit downloadFinished();
+void FileDownloader::finishDownload(){
+   if(networkReply->error() != QNetworkReply::NoError){
+     //failed download
+     qWarning() << QStringLiteral("Download of %1 failed: %2").arg(mUrl.toEncoded().constData()).arg(qPrintable(networkReply->errorString()));
+     emit downloadFailed();
+   } else {
+       // TODO: Deal with redirection.
+       if (isHttpRedirect(networkReply)) {
+         qWarning() << QStringLiteral("Request was redirected.");
+         emit downloadFailed();
+       } else {
+           //successful download
+          QByteArray data= networkReply->readAll();
+          destinationFile.write(data);
+          destinationFile.close();
+          networkReply->deleteLater();
+       }
+   }
+   emit downloadingChanged(false);
+   emit downloadFinished();
 }
 
 void FileDownloader::handleSslErrors (const QList<QSslError> &sslErrors) {

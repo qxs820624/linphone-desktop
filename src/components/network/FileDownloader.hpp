@@ -38,9 +38,7 @@ class FileDownloader : public QObject {
   Q_PROPERTY(qint64 totalBytes READ getTotalBytes NOTIFY totalBytesChanged);
   Q_PROPERTY(bool downloading READ getDownloading NOTIFY downloadingChanged);
 
-public:
-  FileDownloader ();
- 
+public: 
   Q_INVOKABLE void download ();
 
 signals:
@@ -62,14 +60,12 @@ private:
   qint64 getReadBytes () const;
   qint64 getTotalBytes () const;
   bool getDownloading () const;
-
-  bool saveToDisk (const QString &filename, QIODevice *data);
   
   void handleSslErrors (const QList<QSslError> &errors);
   void handleUpdateDownloadProgress (qint64 readBytes,qint64 totalBytes);
 
-  void handleDownloadFinished (QNetworkReply *reply);
-
+  void readData();
+  void finishDownload();
   static QString saveFileName (const QUrl &url);
   static bool isHttpRedirect (QNetworkReply *reply);
   
@@ -78,7 +74,8 @@ private:
   qint64 mReadBytes;
   qint64 mTotalBytes;
   bool mDownloading = false;
-  
+  QFile destinationFile;
+  QPointer<QNetworkReply> networkReply;
   QNetworkAccessManager manager;
   QVector<QNetworkReply *> currentDownloads;
 };
