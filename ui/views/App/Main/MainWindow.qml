@@ -239,6 +239,22 @@ ApplicationWindow {
           source: 'Home.qml'
         }
       }
+
+      // TEST
+      FileDownloader  {
+        //url: 'http://resize-doctissimo.ladmedia.fr/r/166,166,force/img/var/doctissimo/storage/images/fr/www/animaux/chat/0_blocks/content/sante-du-chat/740287-1-fre-FR/Sante-du-chat.jpg'
+        url: 'http://ciscobinary.openh264.org/libopenh264-1.5.0-android19.so.bz2'
+        //url: 'http://archlinux.de-labrusse.fr/iso/2018.02.01/archlinux-2018.02.01-x86_64.iso'
+
+        onDownloadFinished: console.log('DownloadFinished')
+        onDownloadFailed: console.log('onDownloadFailed')
+        onDownloadingChanged: console.log('downloading=' + downloading)
+        onUrlChanged: console.log('url=' + url)
+        onTotalBytesChanged: console.log('totalBytes=' + totalBytes)
+        onReadBytesChanged: console.log('readBytes=' + readBytes)
+
+        Component.onCompleted: download()
+      }
     }
   }
 
@@ -274,22 +290,5 @@ ApplicationWindow {
     onSip: window.setView('Conversation', {
       sipAddress: sipAddress
     })
-  }
-  
-  // TEST
-  FileDownloader  {
-	//outputPath: '/home/parallels/linphone-desktop/test.jpg'
-	//url: 'http://resize-doctissimo.ladmedia.fr/r/166,166,force/img/var/doctissimo/storage/images/fr/www/animaux/chat/0_blocks/content/sante-du-chat/740287-1-fre-FR/Sante-du-chat.jpg'
-	url: 'http://ciscobinary.openh264.org/libopenh264-1.5.0-android19.so.bz2'
-	//url: 'http://archlinux.de-labrusse.fr/iso/2018.02.01/archlinux-2018.02.01-x86_64.iso'
-
-	onDownloadFinished: console.log('DownloadFinished')
-	onDownloadFailed: console.log('onDownloadFailed')
-	onDownloadingChanged: console.log('downloading=' + downloading)
-	onUrlChanged: console.log('url=' + url)
-	onTotalBytesChanged: console.log('totalBytes=' + totalBytes)
-	onReadBytesChanged: console.log('readBytes=' + readBytes)
-	
-	Component.onCompleted: download()
   }
 }

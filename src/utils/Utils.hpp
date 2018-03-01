@@ -46,7 +46,7 @@ namespace Utils {
   }
 
   inline std::string appStringToCoreString (const QString &string) {
-    return string.toLocal8Bit().constData();
+    return qPrintable(string);
   }
 
   // Reverse function of strstr.

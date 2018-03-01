@@ -27,57 +27,57 @@
 
 class QSslError;
 
-using namespace std;
-
 class FileDownloader : public QObject {
   Q_OBJECT;
-  
+
   Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged);
-  Q_PROPERTY(QString outputPath READ getOutputPath WRITE setOutputPath NOTIFY outputPathChanged);
+  Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged);
   Q_PROPERTY(qint64 readBytes READ getReadBytes NOTIFY readBytesChanged);
   Q_PROPERTY(qint64 totalBytes READ getTotalBytes NOTIFY totalBytesChanged);
   Q_PROPERTY(bool downloading READ getDownloading NOTIFY downloadingChanged);
 
-public: 
+public:
   Q_INVOKABLE void download ();
 
 signals:
   void urlChanged (const QUrl &url);
-  void outputPathChanged (const QString &outputPath);
+  void downloadFolderChanged (const QString &downloadFolder);
   void readBytesChanged (qint64 readBytes);
   void totalBytesChanged (qint64 totalBytes);
   void downloadingChanged (bool downloading);
   void downloadFinished ();
   void downloadFailed();
- 
+
 private:
   QUrl getUrl () const;
   void setUrl (const QUrl &url);
-  
-  QString getOutputPath () const;
-  void setOutputPath (const QString &outputPath);
-  
+
+  QString getDownloadFolder () const;
+  void setDownloadFolder (const QString &downloadFolder);
+
   qint64 getReadBytes () const;
+  void setReadBytes (qint64 readBytes);
+
   qint64 getTotalBytes () const;
+  void setTotalBytes (qint64 totalBytes);
+
   bool getDownloading () const;
-  
+  void setDownloading (bool downloading);
+
+  void handleReadyData ();
+  void handleDownloadFinished ();
+
   void handleSslErrors (const QList<QSslError> &errors);
-  void handleUpdateDownloadProgress (qint64 readBytes,qint64 totalBytes);
+  void handleDownloadProgress (qint64 readBytes, qint64 totalBytes);
 
-  void readData();
-  void finishDownload();
-  static QString saveFileName (const QUrl &url);
-  static bool isHttpRedirect (QNetworkReply *reply);
-  
   QUrl mUrl;
-  QString mOutputPath;
-  qint64 mReadBytes;
-  qint64 mTotalBytes;
+  QString mDownloadFolder;
+  QFile mDestinationFile;
+
+  qint64 mReadBytes = 0;
+  qint64 mTotalBytes = 0;
   bool mDownloading = false;
-  QFile destinationFile;
-  QPointer<QNetworkReply> networkReply;
-  QNetworkAccessManager manager;
-  QVector<QNetworkReply *> currentDownloads;
+
+  QPointer<QNetworkReply> mNetworkReply;
+  QNetworkAccessManager mManager;
 };
-
-
