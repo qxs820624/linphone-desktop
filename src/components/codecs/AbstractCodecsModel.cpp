@@ -169,3 +169,12 @@ void AbstractCodecsModel::addCodec (shared_ptr<linphone::PayloadType> &codec) {
 
   mCodecs << map;
 }
+
+void AbstractCodecsModel::addDownloadableCodec (const QString &mime, const QString &downloadUrl) {
+  QVariantMap map;
+
+  map["mime"] = mime;
+  map["downloadUrl"] = downloadUrl;
+
+  mCodecs << map;
+}

@@ -48,7 +48,7 @@ Item {
          width: 500
 
          to: fileDownloader.getTotalBytes()
-         value: fileDownloader.getReadBytes() 
+         value: fileDownloader.getReadBytes()
          indeterminate : true
 
          background: Rectangle {
@@ -89,7 +89,7 @@ Item {
        if (status) {
        unlockView()
        window.setView('Home')
-       } 
+       }
      })
     }
     onTotalBytesChanged: {
