@@ -23,6 +23,7 @@ singleton AssistantAbstractViewStyle                     1.0 Main/Assistant/Assi
 singleton AssistantHomeStyle                             1.0 Main/Assistant/AssistantHomeStyle.qml
 singleton CreateLinphoneSipAccountStyle                  1.0 Main/Assistant/CreateLinphoneSipAccountStyle.qml
 singleton UseLinphoneSipAccountStyle                     1.0 Main/Assistant/UseLinphoneSipAccountStyle.qml
+singleton DownloadOpenH264Style                          1.0 Main/Assistant/DownloadOpenH264Style.qml
 
 singleton AssistantStyle                                 1.0 Main/AssistantStyle.qml
 singleton ContactEditStyle                               1.0 Main/ContactEditStyle.qml

@@ -728,6 +728,33 @@
     </message>
 </context>
 <context>
+    <name>DownloadOpenH264</name>
+    <message>
+        <source>DO YOU AGREE TO DOWNLOAD 
+OPENH264 VIDEO CODEC PROVIDED BY CISCO SYSTEMS,INC.?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DownloadProgressBar</name>
+    <message>
+        <source>DOWNLOADING CODEC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Codec DownloadFinished.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
@@ -879,6 +906,13 @@
     <message>
         <source>stopRecordingLabel</source>
         <translation>Остановить запись.</translation>
+    </message>
+</context>
+<context>
+    <name>InfoDialog</name>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

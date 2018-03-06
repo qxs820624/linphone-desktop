@@ -241,7 +241,7 @@ ApplicationWindow {
       }
 
       // TEST
-      FileDownloader  {
+    /*  FileDownloader  {
         //url: 'http://resize-doctissimo.ladmedia.fr/r/166,166,force/img/var/doctissimo/storage/images/fr/www/animaux/chat/0_blocks/content/sante-du-chat/740287-1-fre-FR/Sante-du-chat.jpg'
         url: 'http://ciscobinary.openh264.org/libopenh264-1.5.0-android19.so.bz2'
         //url: 'http://archlinux.de-labrusse.fr/iso/2018.02.01/archlinux-2018.02.01-x86_64.iso'
@@ -254,7 +254,7 @@ ApplicationWindow {
         onReadBytesChanged: console.log('readBytes=' + readBytes)
 
         Component.onCompleted: download()
-      }
+      } */
     }
   }
 

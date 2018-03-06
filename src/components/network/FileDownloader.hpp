@@ -38,7 +38,8 @@ class FileDownloader : public QObject {
 
 public:
   Q_INVOKABLE void download ();
-
+  Q_INVOKABLE qint64 getTotalBytes () const;
+  Q_INVOKABLE qint64 getReadBytes () const;
 signals:
   void urlChanged (const QUrl &url);
   void downloadFolderChanged (const QString &downloadFolder);
@@ -55,10 +56,7 @@ private:
   QString getDownloadFolder () const;
   void setDownloadFolder (const QString &downloadFolder);
 
-  qint64 getReadBytes () const;
   void setReadBytes (qint64 readBytes);
-
-  qint64 getTotalBytes () const;
   void setTotalBytes (qint64 totalBytes);
 
   bool getDownloading () const;

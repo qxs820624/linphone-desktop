@@ -112,3 +112,5 @@ function handleAuthenticationRequested (authInfo, realm, sipAddress, userId) {
     userId: userId
   })
 }
+
+

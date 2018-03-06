@@ -202,6 +202,7 @@
     <file>ui/modules/Common/Animations/BusyIndicator.qml</file>
     <file>ui/modules/Common/Constants/Constants.qml</file>
     <file>ui/modules/Common/Dialog/ConfirmDialog.qml</file>
+	<file>ui/modules/Common/Dialog/InfoDialog.qml</file>
     <file>ui/modules/Common/Dialog/DialogDescription.qml</file>
     <file>ui/modules/Common/Dialog/DialogPlus.qml</file>
     <file>ui/modules/Common/Form/ActionBar.qml</file>
@@ -404,6 +405,8 @@
     <file>ui/views/App/Main/Assistant/CreateLinphoneSipAccountWithEmail.qml</file>
     <file>ui/views/App/Main/Assistant/CreateLinphoneSipAccountWithPhoneNumber.qml</file>
     <file>ui/views/App/Main/Assistant/FetchRemoteConfiguration.qml</file>
+	<file>ui/views/App/Main/Assistant/DownloadOpenH264.qml</file>
+	<file>ui/views/App/Main/Assistant/DownloadProgressBar.qml</file>
     <file>ui/views/App/Main/Assistant.qml</file>
     <file>ui/views/App/Main/Assistant/UseLinphoneSipAccount.qml</file>
     <file>ui/views/App/Main/Assistant/UseLinphoneSipAccountWithPhoneNumber.qml</file>
@@ -454,6 +457,7 @@
     <file>ui/views/App/Styles/Main/Assistant/CreateLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/Main/AssistantStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/UseLinphoneSipAccountStyle.qml</file>
+	<file>ui/views/App/Styles/Main/Assistant/DownloadOpenH264Style.qml</file>
     <file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
