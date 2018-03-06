@@ -27,7 +27,7 @@
 // =============================================================================
 
 namespace {
-  constexpr const char cDefaultFileName[] = "download";
+  constexpr char cDefaultFileName[] = "download";
 }
 
 static QString getDownloadFilePath (const QString &folder, const QUrl &url) {
